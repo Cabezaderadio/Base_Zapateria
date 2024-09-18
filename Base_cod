@@ -1,0 +1,8 @@
+CREATE TABLE lote (
+    codigo_lote VARCHAR(20) PRIMARY KEY,
+    fecha_agotamiento DATE NOT NULL,
+    fecha_recepcion DATE NOT NULL,
+    valor_lote DECIMAL(10, 2) NOT NULL
+);
+CREATE TABLE material(
+)
