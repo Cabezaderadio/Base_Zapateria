@@ -761,3 +761,58 @@ VALUES
 ```
 
 ![Historial de cambios](./images/add_history.png)
+
+### Actualizar un diseño de un zapato agregando un accesorio nuevo
+
+---
+
+- **Insertar un nuevo tipo de accesorio:**
+
+```sql
+INSERT INTO
+  tipo_accesorio (nombre, material_accesorio, color)
+VALUES
+  ('Hebilla', 'Metal', 'Plateado');
+```
+
+---
+
+- **Insertar el accesorio:**
+
+```sql
+INSERT INTO
+  accesorio (fabricante, valor, id_accesorio)
+VALUES
+  ('Accesorios Huellitas', 5.00, 1);
+```
+
+---
+
+- **Asociar el accesorio al diseño con `id_diseño = 1`:**
+
+```sql
+INSERT INTO
+  diseño_accesorio (id_accesorio, id_diseño)
+VALUES
+  (1, 1);
+```
+
+---
+
+- **Asociar el accesorio a todos los zapatos que tienen `id_diseño = 1`:**
+
+```sql
+INSERT INTO
+  accesorio_zapato (codigo_zapato, codigo_accesorio)
+SELECT
+  z.codigo_zapato,
+  1
+FROM
+  zapato z
+WHERE
+  z.id_diseño = 1;
+```
+
+![Accesorio Zapato](./images/accesorio_zapato.png)
+
+---
