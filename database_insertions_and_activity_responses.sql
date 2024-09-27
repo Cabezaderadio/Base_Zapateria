@@ -1,19 +1,19 @@
--- INSERCIÓN DE DATOS:
--- 1. Insertar 3 maestros zapateros, 2 ayudantes y 2 cortadores.
--- - Crear direcciones para los empleados.
+-- a. 3 maestros zapateros, 2 ayudantes y 2 cortadores.
+-- Primero, debemos insertar direcciones para los empleados, ya que la tabla empleado requiere id_direccion.
+-- Insertar direcciones
 INSERT INTO
-  direccion (calle, carrera, numero, piso)
+  direccion (calle, carrera, numero, tipo_domicilio)
 VALUES
-  ('Calle 1', 'Carrera 1', 101, 1),
-  ('Calle 2', 'Carrera 2', 202, 2),
-  ('Calle 3', 'Carrera 3', 303, 3),
-  ('Calle 4', 'Carrera 4', 404, 4),
-  ('Calle 5', 'Carrera 5', 505, 5),
-  ('Calle 6', 'Carrera 6', 606, 6),
-  ('Calle 7', 'Carrera 7', 707, 7);
+  ('Calle A', 'Carrera 1', 100, 'casa'),
+  ('Calle B', 'Carrera 2', 200, 'apto'),
+  ('Calle C', 'Carrera 3', 300, 'casa'),
+  ('Calle D', 'Carrera 4', 400, 'apto'),
+  ('Calle E', 'Carrera 5', 500, 'casa'),
+  ('Calle F', 'Carrera 6', 600, 'apto'),
+  ('Calle G', 'Carrera 7', 700, 'casa');
 
--- - Insertar los empleados en la tabla empleado.
--- Insertar maestros zapateros en 'empleado'
+-- Insertar empleados en la tabla empleado y luego en sus tablas específicas:
+-- Insertar 3 maestros zapateros
 INSERT INTO
   empleado (
     nombre,
@@ -27,54 +27,45 @@ INSERT INTO
   )
 VALUES
   (
-    'Maestro Zapatero 1',
-    45,
-    '111-1111',
+    'Pedro García',
+    40,
+    '1111111',
     'masculino',
-    '1975-01-01',
+    '1983-05-10',
     1,
     'maestro_zapatero',
-    '2010-05-10'
+    '2022-01-15'
   ),
   (
-    'Maestro Zapatero 2',
-    50,
-    '222-2222',
+    'Laura Sánchez',
+    35,
+    '2222222',
     'femenino',
-    '1970-02-02',
+    '1988-08-20',
     2,
     'maestro_zapatero',
-    '2008-06-15'
+    '2021-06-30'
   ),
   (
-    'Maestro Zapatero 3',
-    55,
-    '333-3333',
-    'otro',
-    '1965-03-03',
+    'Miguel Díaz',
+    45,
+    '3333333',
+    'masculino',
+    '1978-12-05',
     3,
     'maestro_zapatero',
-    '2005-07-20'
+    '2020-03-25'
   );
 
--- Obtener los 'id_empleado' generados
-SELECT
-  id_empleado
-FROM
-  empleado
-WHERE
-  tipo_empleado = 'maestro_zapatero';
-
--- - Insertar los detalles específicos en las tablas maestro_zapatero, ayudante y cortador.
--- Insertar detalles en 'maestro_zapatero'
+-- Insertar detalles en la tabla maestro_zapatero
 INSERT INTO
   maestro_zapatero (id_empleado, especialidad)
 VALUES
-  (1, 'Calzado formal'),
-  (2, 'Calzado deportivo'),
+  (1, 'Calzado deportivo'),
+  (2, 'Calzado formal'),
   (3, 'Calzado casual');
 
--- Insertar ayudantes en 'empleado'
+-- Insertar 2 ayudantes
 INSERT INTO
   empleado (
     nombre,
@@ -88,42 +79,34 @@ INSERT INTO
   )
 VALUES
   (
-    'Ayudante 1',
-    30,
-    '444-4444',
-    'masculino',
-    '1990-04-04',
+    'Ana Ruiz',
+    28,
+    '4444444',
+    'femenino',
+    '1995-07-15',
     4,
     'ayudante',
-    '2018-08-25'
+    '2023-02-10'
   ),
   (
-    'Ayudante 2',
-    28,
-    '555-5555',
-    'femenino',
-    '1992-05-05',
+    'Carlos Vega',
+    30,
+    '5555555',
+    'masculino',
+    '1993-11-22',
     5,
     'ayudante',
-    '2019-09-30'
+    '2022-11-05'
   );
 
--- Obtener los 'id_empleado' generados
-SELECT
-  id_empleado
-FROM
-  empleado
-WHERE
-  tipo_empleado = 'ayudante';
-
--- Insertar detalles en 'ayudante'
+-- Insertar detalles en la tabla ayudante
 INSERT INTO
   ayudante (id_empleado, horas_trabajadas)
 VALUES
   (4, 160),
   (5, 150);
 
--- Insertar cortadores en 'empleado'
+-- Insertar 2 cortadores
 INSERT INTO
   empleado (
     nombre,
@@ -137,208 +120,271 @@ INSERT INTO
   )
 VALUES
   (
-    'Cortador 1',
-    35,
-    '666-6666',
-    'masculino',
-    '1985-06-06',
+    'Elena López',
+    32,
+    '6666666',
+    'femenino',
+    '1991-04-18',
     6,
     'cortador',
-    '2015-10-05'
+    '2021-09-12'
   ),
   (
-    'Cortador 2',
-    32,
-    '777-7777',
-    'femenino',
-    '1988-07-07',
+    'Jorge Morales',
+    38,
+    '7777777',
+    'masculino',
+    '1985-02-28',
     7,
     'cortador',
-    '2016-11-10'
+    '2020-07-08'
   );
 
--- Obtener los 'id_empleado' generados
-SELECT
-  id_empleado
-FROM
-  empleado
-WHERE
-  tipo_empleado = 'cortador';
-
--- Insertar detalles en 'cortador'
+-- Insertar detalles en la tabla cortador
 INSERT INTO
   cortador (id_empleado, experiencia)
 VALUES
   (6, 5),
-  (7, 4);
+  (7, 7);
 
--- 2. Insertar un nuevo diseño de zapato.
--- - Insertar nuevo diseño en 'diseño'
+-- b. Un nuevo diseño de zapato.
+-- Insertar un nuevo tipo de zapato
+INSERT INTO
+  tipo_zapato (nombre)
+VALUES
+  ('Botas');
+
+-- Insertar el nuevo diseño de zapato utilizando el id_tipo obtenido
+INSERT INTO
+  diseño (color)
+VALUES
+  ('Marrón');
+
+-- relacionar los zapateros
+INSERT INTO
+  zapatero_diseño (id_empleado, id_diseño)
+VALUES
+  (2, 1),
+  (1, 1);
+
+-- c. Un lote de 10 zapatos usando ese diseño y los empleados creados anteriormente.
+-- Insertar molde
+INSERT INTO
+  molde (fabricante, forma, talla)
+VALUES
+  ('Fabricante Ejemplo', 'Forma Deportiva', '42');
+
+-- Insertar un nuevo lote de zapatos
+INSERT INTO
+  lote_zapatos (
+    tiempo_estimado,
+    numero_zapatos_fabricados,
+    id_molde
+  )
+VALUES
+  (80, 10, 1);
+
+-- Asociar maestros zapateros al lote (tabla maestro_lz)
+INSERT INTO
+  maestro_lz (codigo_lz, id_zapatero)
+VALUES
+  (1, 1),
+  (1, 2),
+  (1, 3);
+
+-- Insertar suelas creadas por los ayudantes
+INSERT INTO
+  suela (color, fabricante, id_ayudante)
+VALUES
+  ('Negro', 'SuelaMax', 4),
+  ('Negro', 'SuelaMax', 5),
+  ('Negro', 'SuelaMax', 4),
+  ('Negro', 'SuelaMax', 5),
+  ('Negro', 'SuelaMax', 4),
+  ('Negro', 'SuelaMax', 5),
+  ('Negro', 'SuelaMax', 4),
+  ('Negro', 'SuelaMax', 5),
+  ('Negro', 'SuelaMax', 4),
+  ('Negro', 'SuelaMax', 5);
+
+-- Insertar trozos de material cortados por los cortadores
+INSERT INTO
+  material (nombre_material, valor_material, fabricante)
+VALUES
+  ('Cuero', 50.00, 'Materiales SA');
+
+-- insertar los numero de trozos que tiene cada zapato y su material
+INSERT INTO
+  diseño_trozo (id_diseño, numero_trozo, id_material)
+values
+  (1, 2, 1);
+
+INSERT INTO
+  trozo (color, codigo_material, id_cortador)
+VALUES
+  ('Marrón', 1, 6),
+  ('Marrón', 1, 7),
+  ('Marrón', 1, 6),
+  ('Marrón', 1, 7),
+  ('Marrón', 1, 6),
+  ('Marrón', 1, 7),
+  ('Marrón', 1, 6),
+  ('Marrón', 1, 7),
+  ('Marrón', 1, 6),
+  ('Marrón', 1, 7),
+  ('Marrón', 1, 6),
+  ('Marrón', 1, 7),
+  ('Marrón', 1, 6),
+  ('Marrón', 1, 7),
+  ('Marrón', 1, 6),
+  ('Marrón', 1, 7),
+  ('Marrón', 1, 6),
+  ('Marrón', 1, 7),
+  ('Marrón', 1, 6),
+  ('Marrón', 1, 7);
+
+-- Insertar zapatos asociados al lote y diseño
+INSERT INTO
+  zapato (id_diseño, codigo_lz, id_suela)
+VALUES
+  (1, 1, 1),
+  (1, 1, 2),
+  (1, 1, 3),
+  (1, 1, 4),
+  (1, 1, 5),
+  (1, 1, 6),
+  (1, 1, 7),
+  (1, 1, 8),
+  (1, 1, 9),
+  (1, 1, 10);
+
+-- Asociar trozos a los zapatos (tabla trozo_zapato)
+INSERT INTO
+  trozo_zapato (id_zapato, id_trozo)
+VALUES
+  (1, 1),
+  (1, 2),
+  (2, 3),
+  (2, 4),
+  (3, 5),
+  (3, 6),
+  (4, 7),
+  (4, 8),
+  (5, 9),
+  (5, 10),
+  (6, 11),
+  (6, 12),
+  (7, 13),
+  (7, 14),
+  (8, 15),
+  (8, 16),
+  (9, 17),
+  (9, 18),
+  (10, 19),
+  (10, 20);
+
+-- Actualizar el tipo de empleado
+UPDATE empleado
+SET
+  tipo_empleado = 'maestro_zapatero'
+WHERE
+  id_empleado = 4;
+
+-- Insertar en maestro_zapatero
+INSERT INTO
+  maestro_zapatero (id_empleado, especialidad)
+VALUES
+  (4, 'Calzado infantil');
+
+-- insertar el registro en tipo_historial_cambios
+INSERT INTO
+  tipo_historial_cambios (nombre, su_cargo_era, cargo_actual)
+VALUES
+  ('Ascenso', 'ayudante', 'maestro_zapatero');
+
+-- Registrar en historial_de_cambios
+INSERT INTO
+  historial_de_cambios (id_tipo, id_empleado)
+VALUES
+  (1, 4);
+
+-- Añade un nuevo accesorio a un diseño de zapato existente.
+-- Insertar nuevo tipo de accesorio
+INSERT INTO
+  tipo_accesorio (nombre, material_accesorio, color)
+VALUES
+  ('Hebilla', 'Metal', 'Plateado');
+
+-- Insertar el accesorio
+INSERT INTO
+  accesorio (fabricante, valor, id_accesorio)
+VALUES
+  ('Accesorios Huellitas', 5.00, 1);
+
+-- Asociar el accesorio al diseño con id_diseño = 1
+INSERT INTO
+  diseño_accesorio (id_accesorio, id_diseño)
+VALUES
+  (1, 1);
+
+-- Asociar el accesorio a todos los zapatos que tienen id_diseño = 1
+INSERT INTO
+  accesorio_zapato (codigo_zapato, codigo_accesorio)
+SELECT
+  z.codigo_zapato,
+  1
+FROM
+  zapato z
+WHERE
+  z.id_diseño = 1;
+
+-- Actualizar un diseño de un zapato agregando un trozo de un material diferente.
 INSERT INTO
   diseño (color)
 VALUES
   ('Negro');
 
--- 3. Insertar un lote de 10 zapatos usando ese diseño y los empleados creados anteriormente.
--- - Crear un lote en la tabla lote.
+-- Asignar el primer trozo de material existente
 INSERT INTO
-  lote (
-    codigo_lote,
-    fecha_agotamiento,
-    fecha_recepcion,
-    valor_lote
-  )
+  diseño_trozo (id_diseño, numero_trozo, id_material)
 VALUES
-  ('LOTE001', '2023-12-31', '2023-10-01', 10000.00);
+  (2, 1, 1);
 
--- - Crear registros en material y relacionarlos en material_lote.
+-- Insertar un nuevo material en la tabla `material`
 INSERT INTO
-  material (
-    codigo_material,
-    nombre_material,
-    valor_material,
-    fabricante
-  )
+  material (nombre_material, valor_material, fabricante)
 VALUES
-  ('MAT001', 'Cuero', 500.00, 'Materiales SA');
+  (
+    'Tela Sintética',
+    20.00,
+    'Materiales Innovadores SA'
+  );
 
+-- Insertar un trozo de este nuevo material en la tabla `diseño_trozo`
 INSERT INTO
-  material_lote (codigo_material, codigo_lote)
+  diseño_trozo (id_diseño, numero_trozo, id_material)
 VALUES
-  ('MAT001', 'LOTE001');
+  (2, 3, 2);
 
--- - Crear registros en molde y relacionarlos en molde_lote.
-INSERT INTO
-  molde (fabricante, forma, talla)
-VALUES
-  ('Moldes SA', 'Casual', '43');
+-- buscar los zapatos relacionados a un  molde
+SELECT
+  z.codigo_zapato,
+  z.id_diseño,
+  z.codigo_lz,
+  z.id_suela
+FROM
+  zapato z
+  JOIN lote_zapatos lz ON z.codigo_lz = lz.codigo_lz
+WHERE
+  lz.id_molde = 1;
 
--- - Crear registros en suela y relacionarlos en suelas_lote.
-INSERT INTO
-  molde_lote (id_molde, codigo_lote)
-VALUES
-  (1, 'LOTE001');
-
--- - Crear registros en accesorio y relacionarlos en accesorios_lote.
-INSERT INTO
-  suela (color, fabricante, id_ayudante)
-VALUES
-  ('Negro', 'Suelas SA', 4),
-  ('Negro', 'Suelas SA', 4),
-  ('Negro', 'Suelas SA', 4),
-  ('Negro', 'Suelas SA', 4),
-  ('Negro', 'Suelas SA', 4),
-  ('Negro', 'Suelas SA', 4),
-  ('Negro', 'Suelas SA', 4),
-  ('Negro', 'Suelas SA', 4),
-  ('Negro', 'Suelas SA', 4),
-  ('Negro', 'Suelas SA', 4);
-
-INSERT INTO
-  suelas_lote (id_suela, codigo_lote)
-VALUES
-  (1, 'LOTE001'),
-  (2, 'LOTE001'),
-  (3, 'LOTE001'),
-  (4, 'LOTE001'),
-  (5, 'LOTE001'),
-  (6, 'LOTE001'),
-  (7, 'LOTE001'),
-  (8, 'LOTE001'),
-  (9, 'LOTE001'),
-  (10, 'LOTE001');
-
--- - Crear el lote de zapatos en lote_zapatos y relacionarlo con molde_lz.
-INSERT INTO
-  tipo_accesorio (nombre, material_accesorio, color)
-VALUES
-  ('Cordones', 'Algodón', 'Negro');
-
-INSERT INTO
-  accesorio (fabricante, valor, id_accesorio)
-VALUES
-  ('Accesorios SA', 10.00, 1),
-  ('Accesorios SA', 10.00, 1),
-  ('Accesorios SA', 10.00, 1),
-  ('Accesorios SA', 10.00, 1),
-  ('Accesorios SA', 10.00, 1),
-  ('Accesorios SA', 10.00, 1),
-  ('Accesorios SA', 10.00, 1),
-  ('Accesorios SA', 10.00, 1),
-  ('Accesorios SA', 10.00, 1),
-  ('Accesorios SA', 10.00, 1);
-
-INSERT INTO
-  accesorios_lote (codigo_accesorio, codigo_lote)
-VALUES
-  (1, 'LOTE001'),
-  (2, 'LOTE001'),
-  (3, 'LOTE001'),
-  (4, 'LOTE001'),
-  (5, 'LOTE001'),
-  (6, 'LOTE001'),
-  (7, 'LOTE001'),
-  (8, 'LOTE001'),
-  (9, 'LOTE001'),
-  (10, 'LOTE001');
-
--- Crear el lote de zapatos en 'lote_zapatos' y relacionarlo con 'molde_lz'
-INSERT INTO
-  lote_zapatos (
-    codigo_lz,
-    tiempo_estimado,
-    numero_zapatos_fabricados,
-    rango_tallas,
-    cantidad_trozos,
-    valor_lote
-  )
-VALUES
-  ('LZ1001', 30, 10, '40-44', 1, 5000.00);
-
-INSERT INTO
-  molde_lz (id_molde, codigo_lz)
-VALUES
-  (1, 'LZ1001');
-
--- - Crear los trozos necesarios en trozo.
-INSERT INTO
-  trozo (color, codigo_material, id_cortador)
-VALUES
-  ('Café', 'MAT001', 6),
-  ('Café', 'MAT001', 6),
-  ('Café', 'MAT001', 6),
-  ('Café', 'MAT001', 6),
-  ('Café', 'MAT001', 6),
-  ('Café', 'MAT001', 6),
-  ('Café', 'MAT001', 6),
-  ('Café', 'MAT001', 6),
-  ('Café', 'MAT001', 6),
-  ('Café', 'MAT001', 6);
-
--- - Insertar los zapatos en zapato.
-INSERT INTO
-  tipo_zapato (nombre_tipo, color, diseño)
-VALUES
-  ('Modelo Clásico', 'Negro', 'Diseño Clásico');
-
-INSERT INTO
-  zapato (
-    nombre_tipo,
-    id_diseño,
-    codigo_lz,
-    id_suela,
-    id_trozo
-  )
-VALUES
-  ('Modelo Clásico', 1, 'LZ1001', 1, 1),
-  ('Modelo Clásico', 1, 'LZ1001', 2, 2),
-  ('Modelo Clásico', 1, 'LZ1001', 3, 3),
-  ('Modelo Clásico', 1, 'LZ1001', 4, 4),
-  ('Modelo Clásico', 1, 'LZ1001', 5, 5),
-  ('Modelo Clásico', 1, 'LZ1001', 6, 6),
-  ('Modelo Clásico', 1, 'LZ1001', 7, 7),
-  ('Modelo Clásico', 1, 'LZ1001', 8, 8),
-  ('Modelo Clásico', 1, 'LZ1001', 9, 9),
-  ('Modelo Clásico', 1, 'LZ1001', 10, 10);
-
--- - Asociar maestros zapateros al lote en maestro_lz.
+SELECT DISTINCT
+  m.nombre_material,
+  m.valor_material,
+  m.fabricante
+FROM
+  zapato z
+  JOIN diseño_trozo dt ON z.id_diseño = dt.id_diseño
+  JOIN material m ON dt.id_material = m.codigo_material
+WHERE
+  z.codigo_zapato = 1;

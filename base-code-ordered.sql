@@ -6,7 +6,9 @@ CREATE TABLE
     calle VARCHAR(100) NOT NULL,
     carrera VARCHAR(100) NOT NULL,
     numero INT NOT NULL,
-    piso INT
+    tipo_domicilio ENUM ('casa', 'apto', 'otro') NOT NULL,
+    piso INT,
+    apto INT
   );
 
 -- Tabla Empleado (esta tabla es fundamental y la utilizaremos en otras tablas)
@@ -27,21 +29,19 @@ CREATE TABLE
 -- Tabla Lote
 CREATE TABLE
   lote (
-    codigo_lote VARCHAR(20),
+    codigo_lote INT AUTO_INCREMENT PRIMARY KEY,
     fecha_agotamiento DATE NOT NULL,
     fecha_recepcion DATE NOT NULL,
-    valor_lote DECIMAL(10, 2) NOT NULL,
-    PRIMARY KEY (codigo_lote)
+    valor_lote DECIMAL(10, 2) NOT NULL
   );
 
 -- Tabla Material
 CREATE TABLE
   material (
-    codigo_material VARCHAR(20),
+    codigo_material INT AUTO_INCREMENT PRIMARY KEY,
     nombre_material VARCHAR(100) NOT NULL,
     valor_material DECIMAL(10, 2) NOT NULL,
-    fabricante VARCHAR(100) NOT NULL,
-    PRIMARY KEY (codigo_material)
+    fabricante VARCHAR(100) NOT NULL
   );
 
 -- Tablas dependientes de Empleado
@@ -73,80 +73,98 @@ CREATE TABLE
 -- Tabla Tipo_Zapato
 CREATE TABLE
   tipo_zapato (
-    nombre_tipo VARCHAR(100),
-    color VARCHAR(50) NOT NULL,
-    diseño VARCHAR(100),
-    PRIMARY KEY (nombre_tipo)
+    id_tipo_zapato INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100)
   );
 
 -- Tabla Diseño
 CREATE TABLE
   diseño (
-    id_diseño INT AUTO_INCREMENT,
-    color VARCHAR(50) NOT NULL,
-    PRIMARY KEY (id_diseño)
+    id_diseño INT AUTO_INCREMENT PRIMARY KEY,
+    color VARCHAR(50) NOT NULL
+  );
+
+-- creadores del diseño  
+CREATE TABLE
+  zapatero_diseño (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_empleado INT,
+    id_diseño INT,
+    FOREIGN KEY (id_empleado) REFERENCES maestro_zapatero (id_empleado) ON DELETE CASCADE,
+    FOREIGN KEY (id_diseño) REFERENCES diseño (id_diseño) ON DELETE CASCADE
+  );
+  
+-- Tabla Molde
+CREATE TABLE
+  molde (
+    id_molde INT AUTO_INCREMENT PRIMARY KEY,
+    fabricante VARCHAR(100) NOT NULL,
+    forma VARCHAR(100) NOT NULL,
+    talla VARCHAR(50) NOT NULL
   );
 
 -- Tabla Lote_Zapatos
 CREATE TABLE
   lote_zapatos (
-    codigo_lz VARCHAR(20),
+    codigo_lz INT AUTO_INCREMENT PRIMARY KEY,
     tiempo_estimado INT NOT NULL,
     numero_zapatos_fabricados INT NOT NULL,
-    rango_tallas VARCHAR(50),
-    cantidad_trozos INT NOT NULL,
-    valor_lote DECIMAL(10, 2) NOT NULL,
-    PRIMARY KEY (codigo_lz)
+    id_molde INT,
+    FOREIGN KEY (id_molde) REFERENCES molde (id_molde) ON DELETE SET NULL ON UPDATE CASCADE
   );
-
--- Tabla Molde
-CREATE TABLE
-  molde (
-    id_molde INT AUTO_INCREMENT,
-    fabricante VARCHAR(100) NOT NULL,
-    forma VARCHAR(100) NOT NULL,
-    talla VARCHAR(50) NOT NULL,
-    PRIMARY KEY (id_molde)
-  );
-
+  
 -- Tabla Suela
 CREATE TABLE
   suela (
-    id_suela INT AUTO_INCREMENT,
+    id_suela INT AUTO_INCREMENT PRIMARY KEY,
     color VARCHAR(50) NOT NULL,
     fabricante VARCHAR(100) NOT NULL,
     id_ayudante INT,
-    PRIMARY KEY (id_suela),
     FOREIGN KEY (id_ayudante) REFERENCES ayudante (id_empleado)
   );
 
 -- Tabla Trozo
 CREATE TABLE
   trozo (
-    id_trozo INT AUTO_INCREMENT,
+    id_trozo INT AUTO_INCREMENT PRIMARY KEY,
     color VARCHAR(50) NOT NULL,
-    codigo_material VARCHAR(20),
-    id_cortador INT,
-    PRIMARY KEY (id_trozo),
+    codigo_material INT,
+    id_cortador INT NOT NULL,
     FOREIGN KEY (codigo_material) REFERENCES material (codigo_material),
     FOREIGN KEY (id_cortador) REFERENCES cortador (id_empleado)
+  );
+
+-- tabla diseño_trozo
+CREATE TABLE
+  diseño_trozo (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_diseño INT,
+    numero_trozo INT NOT NULL,
+    id_material INT,
+    FOREIGN KEY (id_diseño) REFERENCES diseño (id_diseño),
+    FOREIGN KEY (id_material) REFERENCES material (codigo_material)
   );
 
 -- Tabla Zapato (relaciona varios componentes como trozo, suela, etc.)
 CREATE TABLE
   zapato (
-    codigo_zapato INT AUTO_INCREMENT,
-    nombre_tipo VARCHAR(100),
+    codigo_zapato INT AUTO_INCREMENT PRIMARY KEY,
     id_diseño INT,
-    codigo_lz VARCHAR(20),
+    codigo_lz INT,
     id_suela INT,
-    id_trozo INT,
-    PRIMARY KEY (codigo_zapato),
-    FOREIGN KEY (nombre_tipo) REFERENCES tipo_zapato (nombre_tipo),
     FOREIGN KEY (id_diseño) REFERENCES diseño (id_diseño),
     FOREIGN KEY (codigo_lz) REFERENCES lote_zapatos (codigo_lz),
-    FOREIGN KEY (id_suela) REFERENCES suela (id_suela),
-    FOREIGN KEY (id_trozo) REFERENCES trozo (id_trozo)
+    FOREIGN KEY (id_suela) REFERENCES suela (id_suela)
+  );
+
+-- Crear la tabla trozo_zapato
+CREATE TABLE
+  trozo_zapato (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_zapato INT NOT NULL,
+    id_trozo INT NOT NULL,
+    FOREIGN KEY (id_zapato) REFERENCES zapato (codigo_zapato) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_trozo) REFERENCES trozo (id_trozo) ON DELETE CASCADE ON UPDATE CASCADE
   );
 
 -- Crear tablas accesorias y de relación
@@ -169,6 +187,15 @@ CREATE TABLE
     FOREIGN KEY (id_accesorio) REFERENCES tipo_accesorio (id_accesorio) ON DELETE CASCADE
   );
 
+CREATE TABLE
+  diseño_accesorio (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_accesorio INT,
+    id_diseño INT,
+    FOREIGN KEY (id_accesorio) REFERENCES accesorio (codigo_accesorio),
+    FOREIGN KEY (id_diseño) REFERENCES diseño (id_diseño)
+  );
+
 -- Tabla Accesorio_Zapato
 CREATE TABLE
   accesorio_zapato (
@@ -182,8 +209,8 @@ CREATE TABLE
 -- Tabla Material_Lote (relaciona materiales con lotes)
 CREATE TABLE
   material_lote (
-    codigo_material VARCHAR(20),
-    codigo_lote VARCHAR(20),
+    codigo_material INT AUTO_INCREMENT PRIMARY KEY,
+    codigo_lote INT,
     PRIMARY KEY (codigo_material, codigo_lote),
     FOREIGN KEY (codigo_material) REFERENCES material (codigo_material),
     FOREIGN KEY (codigo_lote) REFERENCES lote (codigo_lote)
@@ -193,7 +220,7 @@ CREATE TABLE
 CREATE TABLE
   molde_lote (
     id_molde INT,
-    codigo_lote VARCHAR(20),
+    codigo_lote INT,
     PRIMARY KEY (id_molde, codigo_lote),
     FOREIGN KEY (id_molde) REFERENCES molde (id_molde),
     FOREIGN KEY (codigo_lote) REFERENCES lote (codigo_lote)
@@ -203,7 +230,7 @@ CREATE TABLE
 CREATE TABLE
   suelas_lote (
     id_suela INT,
-    codigo_lote VARCHAR(20),
+    codigo_lote INT,
     PRIMARY KEY (id_suela, codigo_lote),
     FOREIGN KEY (id_suela) REFERENCES suela (id_suela),
     FOREIGN KEY (codigo_lote) REFERENCES lote (codigo_lote)
@@ -213,26 +240,16 @@ CREATE TABLE
 CREATE TABLE
   accesorios_lote (
     codigo_accesorio INT,
-    codigo_lote VARCHAR(20),
+    codigo_lote INT,
     PRIMARY KEY (codigo_accesorio, codigo_lote),
     FOREIGN KEY (codigo_accesorio) REFERENCES accesorio (codigo_accesorio),
     FOREIGN KEY (codigo_lote) REFERENCES lote (codigo_lote)
   );
 
--- Tabla Molde_LZ (relaciona moldes con lote de zapatos)
-CREATE TABLE
-  molde_lz (
-    id_molde INT,
-    codigo_lz VARCHAR(20),
-    PRIMARY KEY (id_molde, codigo_lz),
-    FOREIGN KEY (id_molde) REFERENCES molde (id_molde),
-    FOREIGN KEY (codigo_lz) REFERENCES lote_zapatos (codigo_lz)
-  );
-
 -- Tabla Maestro_LZ (relaciona maestros zapateros con lote de zapatos)
 CREATE TABLE
   maestro_lz (
-    codigo_lz VARCHAR(20),
+    codigo_lz INT,
     id_zapatero INT,
     PRIMARY KEY (codigo_lz, id_zapatero),
     FOREIGN KEY (codigo_lz) REFERENCES lote_zapatos (codigo_lz),

@@ -122,14 +122,6 @@ CREATE TABLE
     FOREIGN KEY (id_diseño) REFERENCES diseño (id_diseño) ON DELETE CASCADE
   );
 
--- Tabla Lote_Zapatos
-CREATE TABLE
-  lote_zapatos (
-    codigo_lz INT AUTO_INCREMENT PRIMARY KEY,
-    tiempo_estimado INT NOT NULL,
-    numero_zapatos_fabricados INT NOT NULL
-  );
-
 -- Tabla Molde
 CREATE TABLE
   molde (
@@ -137,6 +129,16 @@ CREATE TABLE
     fabricante VARCHAR(100) NOT NULL,
     forma VARCHAR(100) NOT NULL,
     talla VARCHAR(50) NOT NULL
+  );
+
+-- Tabla Lote_Zapatos
+CREATE TABLE
+  lote_zapatos (
+    codigo_lz INT AUTO_INCREMENT PRIMARY KEY,
+    tiempo_estimado INT NOT NULL,
+    numero_zapatos_fabricados INT NOT NULL,
+    id_molde INT,
+    FOREIGN KEY (id_molde) REFERENCES molde (id_molde) ON DELETE SET NULL ON UPDATE CASCADE
   );
 
 -- Tabla Suela
@@ -510,8 +512,6 @@ VALUES
 
 ---
 
-Este conjunto de operaciones permite la correcta inserción de empleados, tanto maestros zapateros como ayudantes y cortadores, en la base de datos, manteniendo la estructura y relaciones necesarias para las tablas dependientes.
-
 ### Insertar un nuevo diseño de un zapato
 
 ---
@@ -561,10 +561,15 @@ VALUES
 - **Insertar un nuevo lote de zapatos:**
 
 ```sql
+-- Insertar molde
+INSERT INTO molde (fabricante, forma, talla)
+VALUES ('Fabricante Ejemplo', 'Forma Deportiva', '42');
+
+-- Insertar un nuevo lote de zapatos
 INSERT INTO
-  lote_zapatos (tiempo_estimado, numero_zapatos_fabricados)
+  lote_zapatos (tiempo_estimado, numero_zapatos_fabricados, id_molde)
 VALUES
-  (80, 10);
+  (80, 10, 1);
 ```
 
 ![Lote de Zapatos](./images/lote_zapato.png)
@@ -885,5 +890,29 @@ WHERE
 ```
 
 ![Consulta Zapatos con Molde](./images/select_shoes_where_molde.png)
+
+---
+
+### Consulta sobre los lotes de material utilizados en la construcción de un zapato
+
+---
+
+- **Realizar una consulta que permita conocer qué lotes de material fueron usados en la construcción de un zapato:**
+
+```sql
+-- Buscar los materiales de un zapato
+SELECT DISTINCT
+  m.nombre_material,
+  m.valor_material,
+  m.fabricante
+FROM
+  zapato z
+  JOIN diseño_trozo dt ON z.id_diseño = dt.id_diseño
+  JOIN material m ON dt.id_material = m.codigo_material
+WHERE
+  z.codigo_zapato = 1;
+```
+
+![Materiales Utilizados en un Zapato](./images/material_where_shoe.png)
 
 ---
