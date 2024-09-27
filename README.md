@@ -553,3 +553,169 @@ VALUES
 ```
 
 ![Zapateros y Diseño](./images/zapatero_diseno.png)
+
+### Insertar un nuevo lote de 10 zapatos generados a partir de este diseño y con los empleados ya creados
+
+---
+
+- **Insertar un nuevo lote de zapatos:**
+
+```sql
+INSERT INTO
+  lote_zapatos (tiempo_estimado, numero_zapatos_fabricados)
+VALUES
+  (80, 10);
+```
+
+![Lote de Zapatos](./images/lote_zapato.png)
+
+---
+
+- **Asociar maestros zapateros al lote (tabla `maestro_lz`):**
+
+```sql
+INSERT INTO
+  maestro_lz (codigo_lz, id_zapatero)
+VALUES
+  (1, 1),
+  (1, 2),
+  (1, 3);
+```
+
+![Maestro Lote](./images/maestro_lz.png)
+
+---
+
+- **Insertar suelas creadas por los ayudantes:**
+
+```sql
+INSERT INTO
+  suela (color, fabricante, id_ayudante)
+VALUES
+  ('Negro', 'SuelaMax', 4),
+  ('Negro', 'SuelaMax', 5),
+  ('Negro', 'SuelaMax', 4),
+  ('Negro', 'SuelaMax', 5),
+  ('Negro', 'SuelaMax', 4),
+  ('Negro', 'SuelaMax', 5),
+  ('Negro', 'SuelaMax', 4),
+  ('Negro', 'SuelaMax', 5),
+  ('Negro', 'SuelaMax', 4),
+  ('Negro', 'SuelaMax', 5);
+```
+
+![Suelas](./images/suela.png)
+
+---
+
+- **Insertar trozos de material cortados por los cortadores:**
+
+```sql
+INSERT INTO
+  material (nombre_material, valor_material, fabricante)
+VALUES
+  ('Cuero', 50.00, 'Materiales SA');
+```
+
+![Material](./images/material.png)
+
+---
+
+- **Insertar los números de trozos que tiene cada zapato y su material:**
+
+```sql
+INSERT INTO
+  diseño_trozo (id_diseño, numero_trozo, id_material)
+VALUES
+  (1, 2, 1);
+```
+
+![Diseño Trozo](./images/diseno_trozo.png)
+
+---
+
+- **Insertar trozos cortados por los cortadores:**
+
+```sql
+INSERT INTO
+  trozo (color, codigo_material, id_cortador)
+VALUES
+  ('Marrón', 1, 6),
+  ('Marrón', 1, 7),
+  ('Marrón', 1, 6),
+  ('Marrón', 1, 7),
+  ('Marrón', 1, 6),
+  ('Marrón', 1, 7),
+  ('Marrón', 1, 6),
+  ('Marrón', 1, 7),
+  ('Marrón', 1, 6),
+  ('Marrón', 1, 7),
+  ('Marrón', 1, 6),
+  ('Marrón', 1, 7),
+  ('Marrón', 1, 6),
+  ('Marrón', 1, 7),
+  ('Marrón', 1, 6),
+  ('Marrón', 1, 7),
+  ('Marrón', 1, 6),
+  ('Marrón', 1, 7),
+  ('Marrón', 1, 6),
+  ('Marrón', 1, 7);
+```
+
+![Trozo](./images/trozo.png)
+
+---
+
+- **Insertar zapatos asociados al lote y diseño:**
+
+```sql
+INSERT INTO
+  zapato (id_diseño, codigo_lz, id_suela)
+VALUES
+  (1, 1, 1),
+  (1, 1, 2),
+  (1, 1, 3),
+  (1, 1, 4),
+  (1, 1, 5),
+  (1, 1, 6),
+  (1, 1, 7),
+  (1, 1, 8),
+  (1, 1, 9),
+  (1, 1, 10);
+```
+
+![Zapatos](./images/zapato.png)
+
+---
+
+- **Asociar trozos a los zapatos (tabla `trozo_zapato`):**
+
+```sql
+INSERT INTO
+  trozo_zapato (id_zapato, id_trozo)
+VALUES
+  (1, 1),
+  (1, 2),
+  (2, 3),
+  (2, 4),
+  (3, 5),
+  (3, 6),
+  (4, 7),
+  (4, 8),
+  (5, 9),
+  (5, 10),
+  (6, 11),
+  (6, 12),
+  (7, 13),
+  (7, 14),
+  (8, 15),
+  (8, 16),
+  (9, 17),
+  (9, 18),
+  (10, 19),
+  (10, 20);
+```
+
+![Trozo Zapato](./images/trozo_zapato.png)
+
+---
