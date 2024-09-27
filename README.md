@@ -719,3 +719,45 @@ VALUES
 ![Trozo Zapato](./images/trozo_zapato.png)
 
 ---
+
+### Modificar el rol de un empleado de ayudante a maestro zapatero
+
+---
+
+- **Actualizar el tipo de empleado:**
+
+```sql
+UPDATE empleado
+SET
+  tipo_empleado = 'maestro_zapatero'
+WHERE
+  id_empleado = 4;
+```
+
+![Actualizar Empleado](./images/update-empleado.png)
+
+---
+
+- **Insertar en la tabla `maestro_zapatero`:**
+
+```sql
+INSERT INTO
+  maestro_zapatero (id_empleado, especialidad)
+VALUES
+  (4, 'Calzado infantil');
+```
+
+![Insertar Maestro Zapatero](./images/insert_maestro_zapatero.png)
+
+---
+
+- **Registrar en la tabla `historial_de_cambios`:**
+
+```sql
+INSERT INTO
+  historial_de_cambios (id_tipo, id_empleado)
+VALUES
+  (1, 4);
+```
+
+![Historial de cambios](./images/add_history.png)
