@@ -319,3 +319,195 @@ CREATE TABLE
 
 - **Respuesta:**  
   No es posible modificar el diseño existente para agregar un tercer trozo de material sin afectar los lotes anteriores, ya que esto implicaría tener dos modelos de zapatos con el mismo diseño, lo cual compromete la consistencia y la integridad de los datos históricos. La mejor práctica en este caso es crear un nuevo diseño antes de iniciar la producción, asegurando que los lotes ya en proceso mantengan la trazabilidad y coherencia con el diseño original.
+
+### 4. Creación de la base de datos y operaciones en SQL
+
+En su motor de base de datos preferido, cree la base de datos con base en el modelo entidad relación que realizó. Luego, realice las siguientes operaciones y adjunte el código SQL que permite realizarlas.
+
+#### Operaciones:
+
+- **Insertar 3 maestros zapateros, 2 ayudantes y 2 cortadores en base de datos.**
+
+---
+
+Primero, debemos insertar direcciones para los empleados, ya que la tabla `empleado` requiere `id_direccion`.
+
+```sql
+-- Insertar direcciones
+INSERT INTO
+  direccion (calle, carrera, numero, tipo_domicilio)
+VALUES
+  ('Calle A', 'Carrera 1', 100, 'casa'),
+  ('Calle B', 'Carrera 2', 200, 'apto'),
+  ('Calle C', 'Carrera 3', 300, 'casa'),
+  ('Calle D', 'Carrera 4', 400, 'apto'),
+  ('Calle E', 'Carrera 5', 500, 'casa'),
+  ('Calle F', 'Carrera 6', 600, 'apto'),
+  ('Calle G', 'Carrera 7', 700, 'casa');
+```
+
+![Direcciones](./images/addresses.png)
+
+---
+
+A continuación, se inserta a los empleados en la tabla `empleado` y luego en sus respectivas tablas específicas.
+
+```sql
+-- Insertar 3 maestros zapateros
+INSERT INTO
+  empleado (
+    nombre,
+    edad,
+    telefono,
+    genero,
+    fecha_nacimiento,
+    id_direccion,
+    tipo_empleado,
+    fecha_contratacion
+  )
+VALUES
+  (
+    'Pedro García',
+    40,
+    '1111111',
+    'masculino',
+    '1983-05-10',
+    1,
+    'maestro_zapatero',
+    '2022-01-15'
+  ),
+  (
+    'Laura Sánchez',
+    35,
+    '2222222',
+    'femenino',
+    '1988-08-20',
+    2,
+    'maestro_zapatero',
+    '2021-06-30'
+  ),
+  (
+    'Miguel Díaz',
+    45,
+    '3333333',
+    'masculino',
+    '1978-12-05',
+    3,
+    'maestro_zapatero',
+    '2020-03-25'
+  );
+```
+
+```sql
+-- Insertar detalles en la tabla maestro_zapatero
+INSERT INTO
+  maestro_zapatero (id_empleado, especialidad)
+VALUES
+  (1, 'Calzado deportivo'),
+  (2, 'Calzado formal'),
+  (3, 'Calzado casual');
+```
+
+![Maestros Zapateros](./images/masters.png)
+
+---
+
+```sql
+-- Insertar 2 ayudantes
+INSERT INTO
+  empleado (
+    nombre,
+    edad,
+    telefono,
+    genero,
+    fecha_nacimiento,
+    id_direccion,
+    tipo_empleado,
+    fecha_contratacion
+  )
+VALUES
+  (
+    'Ana Ruiz',
+    28,
+    '4444444',
+    'femenino',
+    '1995-07-15',
+    4,
+    'ayudante',
+    '2023-02-10'
+  ),
+  (
+    'Carlos Vega',
+    30,
+    '5555555',
+    'masculino',
+    '1993-11-22',
+    5,
+    'ayudante',
+    '2022-11-05'
+  );
+```
+
+```sql
+-- Insertar detalles en la tabla ayudante
+INSERT INTO
+  ayudante (id_empleado, horas_trabajadas)
+VALUES
+  (4, 160),
+  (5, 150);
+```
+
+![Ayudantes](./images/ayudante.png)
+
+---
+
+```sql
+-- Insertar 2 cortadores
+INSERT INTO
+  empleado (
+    nombre,
+    edad,
+    telefono,
+    genero,
+    fecha_nacimiento,
+    id_direccion,
+    tipo_empleado,
+    fecha_contratacion
+  )
+VALUES
+  (
+    'Elena López',
+    32,
+    '6666666',
+    'femenino',
+    '1991-04-18',
+    6,
+    'cortador',
+    '2021-09-12'
+  ),
+  (
+    'Jorge Morales',
+    38,
+    '7777777',
+    'masculino',
+    '1985-02-28',
+    7,
+    'cortador',
+    '2020-07-08'
+  );
+```
+
+```sql
+-- Insertar detalles en la tabla cortador
+INSERT INTO
+  cortador (id_empleado, experiencia)
+VALUES
+  (6, 5),
+  (7, 7);
+```
+
+![Cortadores](./images/cortadores.png)
+
+---
+
+Este conjunto de operaciones permite la correcta inserción de empleados, tanto maestros zapateros como ayudantes y cortadores, en la base de datos, manteniendo la estructura y relaciones necesarias para las tablas dependientes.
