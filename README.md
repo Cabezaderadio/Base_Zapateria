@@ -916,3 +916,20 @@ WHERE
 ![Materiales Utilizados en un Zapato](./images/material_where_shoe.png)
 
 ---
+
+### Contar Zapatos por Diseño
+
+---
+
+- **Consulta para contar la cantidad de zapatos por diseño:**
+
+```sql
+-- Contar zapatos por diseño
+SELECT COUNT(*) AS cantidad_zapatos
+FROM zapato
+WHERE id_diseño = 1;
+```
+
+![Contador de Zapatos](./images/shoes_counter.png)
+
+---

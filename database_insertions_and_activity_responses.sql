@@ -378,6 +378,7 @@ FROM
 WHERE
   lz.id_molde = 1;
 
+-- buscar los materiales de un zapato
 SELECT DISTINCT
   m.nombre_material,
   m.valor_material,
@@ -388,3 +389,8 @@ FROM
   JOIN material m ON dt.id_material = m.codigo_material
 WHERE
   z.codigo_zapato = 1;
+  
+-- Contar Zapatos por Diseño
+SELECT COUNT(*) AS cantidad_zapatos
+FROM zapato
+WHERE id_diseño = 1;
