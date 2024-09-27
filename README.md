@@ -816,3 +816,45 @@ WHERE
 ![Accesorio Zapato](./images/accesorio_zapato.png)
 
 ---
+
+### Actualizar un diseño de un zapato agregando un accesorio nuevo y un trozo de material diferente
+
+---
+
+- **Actualizar un diseño de un zapato agregando un trozo de un material diferente:**
+
+```sql
+INSERT INTO diseño (color)
+VALUES ('Negro');
+```
+
+---
+
+- **Asignar el primer trozo de material existente:**
+
+```sql
+INSERT INTO diseño_trozo (id_diseño, numero_trozo, id_material)
+VALUES (2, 1, 1);
+```
+
+---
+
+- **Insertar un nuevo material en la tabla `material`:**
+
+```sql
+INSERT INTO material (nombre_material, valor_material, fabricante)
+VALUES ('Tela Sintética', 20.00, 'Materiales Innovadores SA');
+```
+
+---
+
+- **Insertar un trozo de este nuevo material en la tabla `diseño_trozo`:**
+
+```sql
+INSERT INTO diseño_trozo (id_diseño, numero_trozo, id_material)
+VALUES (2, 3, 2);
+```
+
+![Actualizar Diseño Trozo](./images/update_diseno_trozo.png)
+
+---
