@@ -511,3 +511,45 @@ VALUES
 ---
 
 Este conjunto de operaciones permite la correcta inserción de empleados, tanto maestros zapateros como ayudantes y cortadores, en la base de datos, manteniendo la estructura y relaciones necesarias para las tablas dependientes.
+
+### Insertar un nuevo diseño de un zapato
+
+---
+
+- **Insertar un nuevo tipo de zapato:**
+
+```sql
+INSERT INTO
+  tipo_zapato (nombre)
+VALUES
+  ('Botas');
+```
+
+![Tipo de Zapato](./images/tipo_zapato.png)
+
+---
+
+- **Insertar el nuevo diseño de zapato utilizando el `id_tipo` obtenido:**
+
+```sql
+INSERT INTO
+  diseño (color, id_tipo, numero_trozos)
+VALUES
+  ('Marrón', 1);
+```
+
+![Diseño del Zapato](./images/diseno.png)
+
+---
+
+- **Relacionar los zapateros:**
+
+```sql
+INSERT INTO
+  zapatero_diseño (id_empleado, id_diseño)
+VALUES
+  (2, 1),
+  (1, 1);
+```
+
+![Zapateros y Diseño](./images/zapatero_diseno.png)
