@@ -303,3 +303,19 @@ CREATE TABLE
 ```
 
 ![Modelo Entidad Relación](./images/model.png)
+
+### 2. Análisis del modelo entidad relación
+
+- **Pregunta:**  
+  Si un empleado pasa de ser ayudante a maestro zapatero, ¿cómo se ven afectados los registros que ya se encontraban en base de datos de este empleado? ¿Es posible hacer el cambio de rol sin afectarlos?
+
+- **Respuesta:**  
+  Al cambiar el rol de un empleado de "ayudante" a "maestro zapatero" en la base de datos de "Huellitas", se actualiza el campo `tipo_empleado` en la tabla `empleado` y se inserta un nuevo registro en `maestro_zapatero` con la información del nuevo rol. Además, para mantener un historial de cambios, se crea un registro en la tabla `tipo_historial_cambios` especificando el cambio de rol y, posteriormente, se registra este evento en la tabla `historial_de_cambios`. Este proceso asegura que los datos históricos no se vean afectados y que todos los cambios de rol queden debidamente documentados, manteniendo la integridad y trazabilidad de la información del empleado sin modificar los datos previos.
+
+### 3. Modificación de un diseño a mitad de producción
+
+- **Pregunta:**  
+  Si a mitad de la producción se decide cambiar un diseño de un zapato para usar tres trozos de material en lugar de dos, ¿es posible modificar el registro sin afectar los lotes anteriores?
+
+- **Respuesta:**  
+  No es posible modificar el diseño existente para agregar un tercer trozo de material sin afectar los lotes anteriores, ya que esto implicaría tener dos modelos de zapatos con el mismo diseño, lo cual compromete la consistencia y la integridad de los datos históricos. La mejor práctica en este caso es crear un nuevo diseño antes de iniciar la producción, asegurando que los lotes ya en proceso mantengan la trazabilidad y coherencia con el diseño original.
