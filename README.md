@@ -858,3 +858,32 @@ VALUES (2, 3, 2);
 ![Actualizar Diseño Trozo](./images/update_diseno_trozo.png)
 
 ---
+
+### Consultas sobre la base de datos
+
+---
+
+Una vez tenga la base de datos con la estructura y los datos cargados, realice las siguientes consultas en la base de datos. Incluya el código SQL en el informe.
+
+---
+
+- **Realizar una consulta que permita conocer en qué zapatos fue usado un determinado molde:**
+
+```sql
+-- Buscar los zapatos relacionados a un molde
+SELECT
+    z.codigo_zapato,
+    z.id_diseño,
+    z.codigo_lz,
+    z.id_suela
+FROM
+    zapato z
+JOIN
+    lote_zapatos lz ON z.codigo_lz = lz.codigo_lz
+WHERE
+    lz.id_molde = 1;
+```
+
+![Consulta Zapatos con Molde](./images/select_shoes_where_molde.png)
+
+---
