@@ -81,7 +81,9 @@ CREATE TABLE
 CREATE TABLE
   diseño (
     id_diseño INT AUTO_INCREMENT PRIMARY KEY,
-    color VARCHAR(50) NOT NULL
+    id_tipo_zapato INT NOT NULL,
+    color VARCHAR(50) NOT NULL,
+    FOREIGN KEY (id_tipo_zapato) REFERENCES tipo_zapato (id_tipo_zapato) ON DELETE SET NULL
   );
 
 -- creadores del diseño  
@@ -93,7 +95,7 @@ CREATE TABLE
     FOREIGN KEY (id_empleado) REFERENCES maestro_zapatero (id_empleado) ON DELETE CASCADE,
     FOREIGN KEY (id_diseño) REFERENCES diseño (id_diseño) ON DELETE CASCADE
   );
-  
+
 -- Tabla Molde
 CREATE TABLE
   molde (
@@ -112,7 +114,7 @@ CREATE TABLE
     id_molde INT,
     FOREIGN KEY (id_molde) REFERENCES molde (id_molde) ON DELETE SET NULL ON UPDATE CASCADE
   );
-  
+
 -- Tabla Suela
 CREATE TABLE
   suela (
@@ -141,7 +143,7 @@ CREATE TABLE
     id_diseño INT,
     numero_trozo INT NOT NULL,
     id_material INT,
-    FOREIGN KEY (id_diseño) REFERENCES diseño (id_diseño),
+    FOREIGN KEY (id_diseño) REFERENCES diseño (id_diseño) ON DELETE CASCADE,
     FOREIGN KEY (id_material) REFERENCES material (codigo_material)
   );
 
@@ -152,9 +154,9 @@ CREATE TABLE
     id_diseño INT,
     codigo_lz INT,
     id_suela INT,
-    FOREIGN KEY (id_diseño) REFERENCES diseño (id_diseño),
-    FOREIGN KEY (codigo_lz) REFERENCES lote_zapatos (codigo_lz),
-    FOREIGN KEY (id_suela) REFERENCES suela (id_suela)
+    FOREIGN KEY (id_diseño) REFERENCES diseño (id_diseño) ON DELETE SET NULL,
+    FOREIGN KEY (codigo_lz) REFERENCES lote_zapatos (codigo_lz) ON DELETE SET NULL,
+    FOREIGN KEY (id_suela) REFERENCES suela (id_suela) ON DELETE SET NULL
   );
 
 -- Crear la tabla trozo_zapato
@@ -202,7 +204,7 @@ CREATE TABLE
     codigo_zapato INT,
     codigo_accesorio INT,
     PRIMARY KEY (codigo_zapato, codigo_accesorio),
-    FOREIGN KEY (codigo_zapato) REFERENCES zapato (codigo_zapato),
+    FOREIGN KEY (codigo_zapato) REFERENCES zapato (codigo_zapato) ON DELETE CASCADE,
     FOREIGN KEY (codigo_accesorio) REFERENCES accesorio (codigo_accesorio)
   );
 
@@ -252,7 +254,7 @@ CREATE TABLE
     codigo_lz INT,
     id_zapatero INT,
     PRIMARY KEY (codigo_lz, id_zapatero),
-    FOREIGN KEY (codigo_lz) REFERENCES lote_zapatos (codigo_lz),
+    FOREIGN KEY (codigo_lz) REFERENCES lote_zapatos (codigo_lz) ON DELETE CASCADE,
     FOREIGN KEY (id_zapatero) REFERENCES maestro_zapatero (id_empleado)
   );
 
