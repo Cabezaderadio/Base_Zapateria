@@ -947,7 +947,7 @@ DELETE FROM zapato WHERE codigo_zapato = <codigo_zapato>;
 
 ```
 
--** Eliminar un diseño de un zapato que ya tenga un lote de 10 zapatos generados**
+-**Eliminar un diseño de un zapato que ya tenga un lote de 10 zapatos generados**
 ```sql
 -- Verificar si el lote tiene al menos 10 zapatos
 SELECT codigo_lz FROM lote_zapatos WHERE numero_zapatos_fabricados >= 10;
