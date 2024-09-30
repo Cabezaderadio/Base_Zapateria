@@ -398,6 +398,8 @@ VALUES
     'maestro_zapatero',
     '2020-03-25'
   );
+![image](https://github.com/user-attachments/assets/f01c94f0-9dff-4303-867c-d55d86cb90ed)
+
 ```
 
 ```sql
