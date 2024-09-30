@@ -398,6 +398,8 @@ VALUES
     'maestro_zapatero',
     '2020-03-25'
   );
+![image](https://github.com/user-attachments/assets/f01c94f0-9dff-4303-867c-d55d86cb90ed)
+
 ```
 
 ```sql
@@ -933,3 +935,38 @@ WHERE id_diseño = 1;
 ![Contador de Zapatos](./images/shoes_counter.png)
 
 ---
+
+### Eliminar zapatos
+
+---
+
+- **Consulta para eliminar un zapato**
+```sql
+-- Elimina el zapato 
+DELETE FROM zapato WHERE codigo_zapato = <codigo_zapato>;
+
+```
+
+- **Eliminar un diseño de un zapato que ya tenga un lote de 10 zapatos generados**
+```sql
+-- Verificar si el lote tiene al menos 10 zapatos
+SELECT codigo_lz FROM lote_zapatos WHERE numero_zapatos_fabricados >= 10;
+-- Eliminar el diseño asociado a ese zapato
+DELETE FROM diseño WHERE id_diseño = <id_diseño>;
+```
+
+- **Insertar un nuevo accesorio y luego insertar un diseño que use este accesorio**
+```sql
+-- Insertar el tipo de accesorio (si no está ya en la base de datos)
+INSERT INTO tipo_accesorio (nombre, material_accesorio, color)
+VALUES ('Hebilla metálica', 'Metal', 'Plata');
+-- Insertar el accesorio
+INSERT INTO accesorio (fabricante, valor, id_accesorio)
+VALUES ('Fábrica de Hebillas', 15.50, <id_accesorio>);
+-- Insertar la relación entre el diseño y el accesorio
+INSERT INTO diseño_accesorio (id_accesorio, id_diseño)
+VALUES (<codigo_accesorio>, <id_diseño>);
+```
+
+
+
