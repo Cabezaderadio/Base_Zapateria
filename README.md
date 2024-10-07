@@ -945,30 +945,35 @@ WHERE id_diseño = 1;
 - **Consulta para eliminar un zapato**
 ```sql
 -- Elimina el zapato 
-DELETE FROM zapato WHERE codigo_zapato = <codigo_zapato>;
+DELETE FROM zapato WHERE codigo_zapato = 1;
 
 ```
 
 - **Eliminar un diseño de un zapato que ya tenga un lote de 10 zapatos generados**
 ```sql
--- Verificar si el lote tiene al menos 10 zapatos
-SELECT codigo_lz FROM lote_zapatos WHERE numero_zapatos_fabricados >= 10;
--- Eliminar el diseño asociado a ese zapato
-DELETE FROM diseño WHERE id_diseño = <id_diseño>;
+-- Paso 1: Verificar si el lote tiene al menos 10 zapatos
+SELECT codigo_lz 
+FROM lote_zapatos 
+WHERE numero_zapatos_fabricados >= 10;
+
+-- Paso 2: Obtener el id_diseño asociado al lote
+SELECT id_diseño 
+FROM lote_diseño 
+WHERE codigo_lz = <codigo_lz>; -- Sustituir <codigo_lz> por el código obtenido del lote
+
+-- Paso 3: Eliminar el diseño
+DELETE FROM diseño 
+WHERE id_diseño = <id_diseño>; -- Sustituir <id_diseño> por el id obtenido en el paso anterior
 ```
 
 - **Insertar un nuevo accesorio y luego insertar un diseño que use este accesorio**
 ```sql
--- Insertar el tipo de accesorio (si no está ya en la base de datos)
 INSERT INTO tipo_accesorio (nombre, material_accesorio, color)
 VALUES ('Hebilla metálica', 'Metal', 'Plata');
--- Insertar el accesorio
+SELECT LAST_INSERT_ID();
 INSERT INTO accesorio (fabricante, valor, id_accesorio)
-VALUES ('Fábrica de Hebillas', 15.50, <id_accesorio>);
--- Insertar la relación entre el diseño y el accesorio
+VALUES ('Fábrica de Hebillas', 15.50, 1); -- Usamos el id_accesorio obtenido
 INSERT INTO diseño_accesorio (id_accesorio, id_diseño)
-VALUES (<codigo_accesorio>, <id_diseño>);
-```
-
+VALUES (1, 2); -- 1 es el id_accesorio, 2 es el id_diseño
 
 
