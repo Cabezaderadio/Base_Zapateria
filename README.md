@@ -306,7 +306,7 @@ CREATE TABLE
   );
 ```
 
-![Modelo Entidad Relación](./images/model.png)
+![Modelo Entidad Relación](./images/model_2.png)
 
 ### 2. Análisis del modelo entidad relación
 
