@@ -537,7 +537,7 @@ VALUES
 
 ```sql
 INSERT INTO
-  diseño (color, id_tipo, numero_trozos)
+  diseño (color, id_tipo_zapato, numero_trozos)
 VALUES
   ('Marrón', 1);
 ```
@@ -764,7 +764,7 @@ VALUES
 
 ```sql
 INSERT INTO
-  historial_de_cambios (id_tipo, id_empleado)
+  historial_de_cambios (id_tipo_zapato, id_empleado)
 VALUES
   (1, 4);
 ```
