@@ -81,7 +81,7 @@ CREATE TABLE
 CREATE TABLE
   diseño (
     id_diseño INT AUTO_INCREMENT PRIMARY KEY,
-    id_tipo_zapato INT NOT NULL,
+    id_tipo_zapato INT,
     color VARCHAR(50) NOT NULL,
     FOREIGN KEY (id_tipo_zapato) REFERENCES tipo_zapato (id_tipo_zapato) ON DELETE SET NULL
   );
@@ -211,7 +211,7 @@ CREATE TABLE
 -- Tabla Material_Lote (relaciona materiales con lotes)
 CREATE TABLE
   material_lote (
-    codigo_material INT AUTO_INCREMENT PRIMARY KEY,
+    codigo_material INT AUTO_INCREMENT,
     codigo_lote INT,
     PRIMARY KEY (codigo_material, codigo_lote),
     FOREIGN KEY (codigo_material) REFERENCES material (codigo_material),
